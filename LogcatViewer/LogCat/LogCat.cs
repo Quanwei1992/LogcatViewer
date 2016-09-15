@@ -73,6 +73,7 @@ namespace LogcatViewer
             info.RedirectStandardOutput = true;
             info.UseShellExecute = false;
             info.CreateNoWindow = true;
+            info.StandardOutputEncoding = Encoding.UTF8;
             mADBProcess = System.Diagnostics.Process.Start(info);
             //mADBProcess.WaitForInputIdle();
             string output = mADBProcess.StandardOutput.ReadToEnd();
@@ -96,7 +97,9 @@ namespace LogcatViewer
         void onReveOutputData(object sender, DataReceivedEventArgs e)
         {
             if (e == null || e.Data == null) return;
-            if (e.Data.StartsWith("[") && e.Data.EndsWith("]"))
+            var bytes = Encoding.GetEncoding("GB2312").GetBytes(e.Data);
+            string str = Encoding.UTF8.GetString(bytes);
+            if (str.StartsWith("[") && str.EndsWith("]"))
             {
                 if (logCache != null) {
                     logCache.msg = msgCache;
@@ -107,14 +110,11 @@ namespace LogcatViewer
 
                 }
                 msgCache = null;
-                logCache = LogMsg.Parse(e.Data);
+                logCache = LogMsg.Parse(str);
             }
             else {
-                msgCache += e.Data;
+                msgCache += str;
             }
         }
-
-
-
     }
 }

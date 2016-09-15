@@ -32,6 +32,7 @@ namespace LogcatViewer
         static Regex MetaRegex = new Regex(logMetaFormatPattern);
         public static LogMsg Parse(string s)
         {
+
             if (MetaRegex.IsMatch(s))
             {
                 LogMsg msg = new LogMsg();
@@ -79,6 +80,8 @@ namespace LogcatViewer
 
                 msg.tag = match.Groups["Tag"].Value;
                 msg.tag = msg.tag.Trim();
+
+
                 return msg;
             }
 

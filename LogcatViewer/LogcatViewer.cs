@@ -19,6 +19,10 @@ namespace LogcatViewer
         LogFliter fliter = new LogFliter();
         public LogcatViewer()
         {
+
+
+            
+
             InitializeComponent();
             logcat.OnRecvLog = OnRecvLog;
             RefreshProcessList();
@@ -81,7 +85,7 @@ namespace LogcatViewer
 
             ListViewItem item = new ListViewItem();
             item.ImageIndex = iconIndex;
-            item.Text = string.Format("[{0}]{1}",log.tag,log.msg);
+            item.Text = string.Format("[{0}]{1}",log.tag,log.msg.Replace("\n","\r\n"));
             item.Tag = log;
 
             if (fliter.isMatch(log)) {
@@ -197,7 +201,8 @@ namespace LogcatViewer
                 string text = "";
                 foreach (ListViewItem item in listView_log.SelectedItems) {
                     var log = item.Tag as LogMsg;
-                    text = text + log.msg + "\r\n";
+
+                    text = text + log.msg.Replace("\n","\r\n") + "\r\n";
                 }
                 
                 textBox_log_msg.Text = text;
