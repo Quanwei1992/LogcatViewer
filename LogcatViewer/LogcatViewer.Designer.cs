@@ -35,7 +35,10 @@
             this.imageList_icon = new System.Windows.Forms.ImageList(this.components);
             this.checkBox_autoscroll = new System.Windows.Forms.CheckBox();
             this.splitContainer_main = new System.Windows.Forms.SplitContainer();
+            this.treeView_apps = new DoubleBufferTreeView();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.listView_log = new DoubleBufferListView();
+            this.Msg = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.textBox_log_msg = new System.Windows.Forms.TextBox();
             this.button_clear = new System.Windows.Forms.Button();
             this.timer_addlog = new System.Windows.Forms.Timer(this.components);
@@ -43,9 +46,6 @@
             this.button_refresh_processList = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.treeView_apps = new DoubleBufferTreeView();
-            this.listView_log = new DoubleBufferListView();
-            this.Msg = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer_main)).BeginInit();
             this.splitContainer_main.Panel1.SuspendLayout();
             this.splitContainer_main.Panel2.SuspendLayout();
@@ -102,6 +102,19 @@
             this.splitContainer_main.SplitterDistance = 306;
             this.splitContainer_main.TabIndex = 4;
             // 
+            // treeView_apps
+            // 
+            this.treeView_apps.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.treeView_apps.Location = new System.Drawing.Point(0, 0);
+            this.treeView_apps.Name = "treeView_apps";
+            treeNode1.Name = "RootNode";
+            treeNode1.Text = "All";
+            this.treeView_apps.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
+            treeNode1});
+            this.treeView_apps.Size = new System.Drawing.Size(304, 534);
+            this.treeView_apps.TabIndex = 0;
+            this.treeView_apps.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView_apps_AfterSelect);
+            // 
             // splitContainer1
             // 
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -119,6 +132,31 @@
             this.splitContainer1.Size = new System.Drawing.Size(606, 534);
             this.splitContainer1.SplitterDistance = 378;
             this.splitContainer1.TabIndex = 4;
+            // 
+            // listView_log
+            // 
+            this.listView_log.BackColor = System.Drawing.SystemColors.Control;
+            this.listView_log.BackgroundImageTiled = true;
+            this.listView_log.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.Msg});
+            this.listView_log.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listView_log.FullRowSelect = true;
+            this.listView_log.GridLines = true;
+            this.listView_log.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.listView_log.LabelWrap = false;
+            this.listView_log.Location = new System.Drawing.Point(0, 0);
+            this.listView_log.Name = "listView_log";
+            this.listView_log.Size = new System.Drawing.Size(606, 378);
+            this.listView_log.SmallImageList = this.imageList_icon;
+            this.listView_log.TabIndex = 4;
+            this.listView_log.UseCompatibleStateImageBehavior = false;
+            this.listView_log.View = System.Windows.Forms.View.Details;
+            this.listView_log.SelectedIndexChanged += new System.EventHandler(this.listView_log_SelectedIndexChanged_1);
+            // 
+            // Msg
+            // 
+            this.Msg.Text = "Msg";
+            this.Msg.Width = 603;
             // 
             // textBox_log_msg
             // 
@@ -179,44 +217,6 @@
             this.label2.Size = new System.Drawing.Size(221, 12);
             this.label2.TabIndex = 9;
             this.label2.Text = "eg: pid=1;msg=xxx;tag=Unity;lv=e/i/w";
-            // 
-            // treeView_apps
-            // 
-            this.treeView_apps.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.treeView_apps.Location = new System.Drawing.Point(0, 0);
-            this.treeView_apps.Name = "treeView_apps";
-            treeNode1.Name = "RootNode";
-            treeNode1.Text = "All";
-            this.treeView_apps.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode1});
-            this.treeView_apps.Size = new System.Drawing.Size(304, 534);
-            this.treeView_apps.TabIndex = 0;
-            this.treeView_apps.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView_apps_AfterSelect);
-            // 
-            // listView_log
-            // 
-            this.listView_log.BackColor = System.Drawing.SystemColors.Control;
-            this.listView_log.BackgroundImageTiled = true;
-            this.listView_log.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.Msg});
-            this.listView_log.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listView_log.FullRowSelect = true;
-            this.listView_log.GridLines = true;
-            this.listView_log.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.listView_log.LabelWrap = false;
-            this.listView_log.Location = new System.Drawing.Point(0, 0);
-            this.listView_log.Name = "listView_log";
-            this.listView_log.Size = new System.Drawing.Size(606, 378);
-            this.listView_log.SmallImageList = this.imageList_icon;
-            this.listView_log.TabIndex = 4;
-            this.listView_log.UseCompatibleStateImageBehavior = false;
-            this.listView_log.View = System.Windows.Forms.View.Details;
-            this.listView_log.SelectedIndexChanged += new System.EventHandler(this.listView_log_SelectedIndexChanged_1);
-            // 
-            // Msg
-            // 
-            this.Msg.Text = "Msg";
-            this.Msg.Width = 603;
             // 
             // LogcatViewer
             // 

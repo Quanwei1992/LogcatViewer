@@ -19,13 +19,11 @@ namespace LogcatViewer
         LogFliter fliter = new LogFliter();
         public LogcatViewer()
         {
-
-
-            
-
             InitializeComponent();
             logcat.OnRecvLog = OnRecvLog;
             RefreshProcessList();
+
+            LogMsg log = new LogMsg();
         }
 
         private void button_run_Click(object sender, EventArgs e)
@@ -85,7 +83,13 @@ namespace LogcatViewer
 
             ListViewItem item = new ListViewItem();
             item.ImageIndex = iconIndex;
-            item.Text = string.Format("[{0}]{1}",log.tag,log.msg.Replace("\n","\r\n"));
+            var lines = log.msg.Split('\n');
+            string newStr = lines[0];
+            if (lines.Length >= 2) {
+                newStr = newStr + "\n" + lines[1];
+            }
+            //log.msg = "hello\nhhi\n";
+            item.Text = string.Format("[{0}]{1}",log.tag,newStr);
             item.Tag = log;
 
             if (fliter.isMatch(log)) {
@@ -202,10 +206,10 @@ namespace LogcatViewer
                 foreach (ListViewItem item in listView_log.SelectedItems) {
                     var log = item.Tag as LogMsg;
 
-                    text = text + log.msg.Replace("\n","\r\n") + "\r\n";
+                    text = text + log.msg + "\n";
                 }
                 
-                textBox_log_msg.Text = text;
+                textBox_log_msg.Lines = text.Split('\n');
             }
 
         }

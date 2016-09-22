@@ -61,9 +61,11 @@ namespace LogcatViewer
         public void stop()
         {
             if (!isRunning) return;
-            mADBProcess.Kill();
-            mADBProcess = null;
-            isRunning = false;
+            if (mADBProcess != null && !mADBProcess.HasExited) {
+                mADBProcess.Kill();
+                mADBProcess = null;
+                isRunning = false;
+            }      
         }
 
 
@@ -99,10 +101,15 @@ namespace LogcatViewer
             if (e == null || e.Data == null) return;
             var bytes = Encoding.GetEncoding("GB2312").GetBytes(e.Data);
             string str = Encoding.UTF8.GetString(bytes);
-            if (str.StartsWith("[") && str.EndsWith("]"))
-            {
+            if (str.StartsWith("[") && str.EndsWith("]")) {
                 if (logCache != null) {
+                    if (msgCache!=null && msgCache.EndsWith("\n")) {
+                        msgCache = msgCache.Substring(0, msgCache.Length - 1);
+                    }
                     logCache.msg = msgCache;
+                    if (logCache.msg == null) {
+                        logCache.msg = "";
+                    }
                     if (logCache.date >= lastLogDate) {
                         lastLogDate = logCache.date;
                         OnRecvLog?.Invoke(logCache);
@@ -111,9 +118,11 @@ namespace LogcatViewer
                 }
                 msgCache = null;
                 logCache = LogMsg.Parse(str);
-            }
-            else {
-                msgCache += str;
+            } else {
+                if (!string.IsNullOrWhiteSpace(str)) {
+                    msgCache += str+"\n";
+                }
+               
             }
         }
     }
