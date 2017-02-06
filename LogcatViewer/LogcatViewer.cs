@@ -193,7 +193,8 @@ namespace LogcatViewer
 
         private void splitContainer_main_Panel2_Resize(object sender, EventArgs e)
         {
-            if (listView_log.Columns.Count > 0) {
+
+            if (listView_log.Columns.Count > 0 && this.WindowState != FormWindowState.Minimized) {
                 listView_log.Columns[0].Width = listView_log.Width - 32;
             }
             
